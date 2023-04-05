@@ -1,5 +1,8 @@
+import requests
+import urllib3
 import RPi.GPIO as GPIO
 import time
+http = urllib3.PoolManager()
 
 channel = 21
 
@@ -17,11 +20,14 @@ def motor_off(pin):
 
 
 if __name__ == '__main__':
-    try:
+    msg=requests.get("https://api.thingspeak.com/channels/2015574/fields/1.json?results=2")
+    msg=msg.json()['feeds'][-1]['field1']
+    print(msg)
+    temp=int(msg)
+    if temp==1:
         motor_on(channel)
-        time.sleep(1)
+    else:
         motor_off(channel)
-        time.sleep(1)
-        GPIO.cleanup()
-    except KeyboardInterrupt:
-        GPIO.cleanup()
+    GPIO.cleanup()
+
+    
