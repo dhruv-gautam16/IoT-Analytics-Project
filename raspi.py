@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 http = urllib3.PoolManager()
 
-channel = 21
+channel = 17
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
